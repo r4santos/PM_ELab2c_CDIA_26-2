@@ -20,15 +20,21 @@ public class ColetorDados extends Operador {
      */
     public double addTurnoExtra(double quantidade) {
         // TODO: se quantidade <= 0, não altera e devolve turnosExtras atual
+        if (quantidade <= 0)
+            return turnosExtras;
         // TODO: soma quantidade, sem ultrapassar MAX_TURNOS; devolve o novo total
-        return 0.0;
+        turnosExtras = Math.min(MAX_TURNOS, turnosExtras + quantidade);
+        return turnosExtras;
     }
 
     @Override
     public double registrarPagamento() {
         // TODO: calcular total, armazenar, zerar turnosExtras e devolver
-        return 0.0;
-    }
+        double total = SALARIO + valorTurnosExtras();
+        ultimoPagamento = total;
+        turnosExtras = 0.0;
+        return total;
+    }                            
 
     @Override
     public String toString() {

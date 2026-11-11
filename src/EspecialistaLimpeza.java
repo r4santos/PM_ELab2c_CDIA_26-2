@@ -19,11 +19,18 @@ public class EspecialistaLimpeza extends Operador {
      */
     private double valorBonus() {
         // TODO: percorrer lotes e acumular o bônus dos elegíveis
-        return 0.0;
+        double total = 0.0;
+        for (LoteDados l : lotes) {
+            int dias = l.diasAposFinalizacao();
+            if (dias >= 0 && dias <= TEMPO_BONUS)
+                total += SALARIO * BONUS;
+        }
+
+        return total;
     }
 
     public int alocarLote(LoteDados lote) {
-        for (LoteDados l : lotes) {
+        for (LoteDados l :   lotes) {
             if (l.diasAposFinalizacao() == -1) return -1;
         }
         lotes.add(lote);
@@ -33,7 +40,9 @@ public class EspecialistaLimpeza extends Operador {
     @Override
     public double registrarPagamento() {
         // TODO: calcular total, armazenar em ultimoPagamento e devolver
-        return 0.0;
+        double total = SALARIO + valorBonus();
+        ultimoPagamento = total;
+        return total;
     }
 
     @Override
